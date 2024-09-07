@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { ArticleProps } from "../../Types/Types";
 import CreatePostForm from "../../Components/CreatePostForm/CreatePostForm";
+import { PostContent } from "../../BlogPostHTML/PostContent";
 
 const TOKEN =
   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L3Rlc3RzaWRhIiwiaWF0IjoxNzI1NTI3MDIwLCJuYmYiOjE3MjU1MjcwMjAsImV4cCI6MTcyNjEzMTgyMCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.YWf6QOWuZgNBL9sy3EXwJB-7JO_X3Vwz_hsV4UMzKsQ";
@@ -46,14 +47,6 @@ const CreatePostPage = ({
       // Ladda upp bilden och få tillbaka bilddata
       const imageData = await UploadImage();
 
-      const postContent = `
-      <div style="display: flex; gap: 20px;">
-      <p style="font-style: italic;">${article.entry}</p>
-        <img style="max-width: 320px; border: 1px solid black; border-radius: 3px;" src="${imageData.source_url}" alt="${article.title}" />
-    </div>
-    <p>${article.breadth}</p>
-      `;
-
       const response = await fetch(`${BASE_URL}/posts`, {
         method: "POST",
         headers: {
@@ -62,7 +55,7 @@ const CreatePostPage = ({
         },
         body: JSON.stringify({
           title: article.title,
-          content: postContent,
+          content: PostContent(article, imageData),
           status: "publish",
         }),
       });

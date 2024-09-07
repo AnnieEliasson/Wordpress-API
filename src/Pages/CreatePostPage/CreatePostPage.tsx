@@ -94,7 +94,9 @@ const CreatePostPage = ({
         onChange={handleFileInput}
       />
 
-      <button onClick={PostToWordpress}>Posta inlägg</button>
+      <button className="publish-btn" onClick={PostToWordpress}>
+        Publicera
+      </button>
     </div>
   );
 };

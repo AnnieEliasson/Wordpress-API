@@ -29,8 +29,12 @@ const CreatePostForm = ({ article, setArticle, imageSrc }: Props) => {
         <div
           className="image"
           style={{
-            backgroundImage: `url(${imageSrc})`,
-            backgroundSize: "cover",
+            backgroundImage: `url(${
+              imageSrc ? imageSrc : "./transparent_kraken.png"
+            })`,
+            backgroundSize: "contain",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
           }}
         ></div>
       </div>

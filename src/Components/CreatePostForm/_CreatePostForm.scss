@@ -5,7 +5,7 @@
   margin: auto;
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: $form-bg-color;
   padding: 50px;
   box-shadow: 0 0 5px black;
   border-radius: 3px;
@@ -24,6 +24,8 @@
       font-style: italic;
       font-size: 22px;
       border: none;
+      cursor: pointer;
+
       &::placeholder {
         transition: 0.7s;
       }
@@ -41,7 +43,7 @@
       width: 50%;
       /* height: 250px; */
       height: auto;
-      background-color: rgb(229, 229, 229);
+      background-color: rgba(199, 199, 199, 0.63);
       border: 1px solid black;
       border-radius: 5px;
       /* box-shadow: 2px 2px 5px black; */
@@ -55,6 +57,7 @@
     letter-spacing: 1px;
     border: none;
     margin-bottom: 20px;
+    cursor: pointer;
 
     &::placeholder {
       transition: 0.7s;
@@ -76,6 +79,7 @@
   font-family: "Times New Roman", Times, serif;
   font-size: 22px;
   height: 650px;
+  cursor: pointer;
 
   &::placeholder {
     transition: 0.7s;

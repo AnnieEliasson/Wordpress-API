@@ -1,20 +1,32 @@
+import { Article } from "../../Types/Types";
+
 type Props = {
-  article: {
-    breadth: string;
-    entry: string;
-    title: string;
-  };
+  article: Article;
+  test: string;
 };
 
-const subscribers = ["annie.eliasson@gmail.com", "90anneli@skola.boras.se"];
+const subscribers = ["annie.eliasson@gmail.com"];
 
-const Email = ({ article }: Props) => {
-  const sendMail = () => {
+const Email = ({ article, test }: Props) => {
+  const sendMail = (
+    article: {
+      article?: Article;
+      title?: any;
+      entry?: any;
+      breadth?: any;
+      file?: any;
+    },
+    test: string
+  ) => {
+    console.log(article.file);
+
     const serviceId = "service_7nigrok";
     const templateId = "template_q2ilo02";
     const publicKey = "u_YqnrrTApsmG-_FN";
 
     subscribers.forEach((subscriber) => {
+      console.log("test", test);
+
       const data = {
         service_id: serviceId,
         template_id: templateId,
@@ -24,6 +36,7 @@ const Email = ({ article }: Props) => {
           entry: article.entry,
           breadth: article.breadth,
           to_email: subscriber,
+          image: `http://localhost/testsida/wp-content/uploads/2024/09/${test}`,
         },
       };
 
@@ -56,7 +69,7 @@ const Email = ({ article }: Props) => {
 
   return (
     <div>
-      <button onClick={sendMail}>Skicka</button>
+      <button onClick={() => sendMail(article, test)}>Skicka</button>
     </div>
   );
 };

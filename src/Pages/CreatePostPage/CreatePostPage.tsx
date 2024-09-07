@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { ArticleProps } from "../../Types/Types";
+import { Article } from "../../Types/Types";
 import CreatePostForm from "../../Components/CreatePostForm/CreatePostForm";
 import { PostContent } from "../../BlogPostHTML/PostContent";
 
@@ -7,17 +7,18 @@ export const TOKEN =
   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L3Rlc3RzaWRhIiwiaWF0IjoxNzI1NTI3MDIwLCJuYmYiOjE3MjU1MjcwMjAsImV4cCI6MTcyNjEzMTgyMCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.YWf6QOWuZgNBL9sy3EXwJB-7JO_X3Vwz_hsV4UMzKsQ";
 const BASE_URL = "http://localhost/testsida/wp-json/wp/v2";
 
-const CreatePostPage = ({
-  file,
-  setFile,
-  article,
-  setArticle,
-}: ArticleProps) => {
+type Props = {
+  article: Article;
+  setArticle: any;
+  setTest: any;
+};
+
+const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
   // Hanterar uppladdningen av bilden
   const UploadImage = async () => {
     try {
       const formData = new FormData();
-      if (file) formData.append("file", file);
+      if (article.file) formData.append("file", article.file);
 
       const response = await fetch(`${BASE_URL}/media`, {
         method: "POST",
@@ -74,8 +75,11 @@ const CreatePostPage = ({
   const [imageSrc, setImageSrc] = useState("");
   const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setFile(e.target.files[0]);
+      /* setFile(e.target.files[0]); */
+      setArticle({ ...article, file: e.target.files[0] });
       setImageSrc(URL.createObjectURL(e.target.files[0]));
+      console.log(e.target.files[0].name);
+      setTest(e.target.files[0].name);
     }
   };
 

@@ -2,16 +2,12 @@ import { useState } from "react";
 import "./App.css";
 import CreatePostPage from "./Pages/CreatePostPage/CreatePostPage";
 import Email from "./Components/Email/Email";
+import { Article } from "./Types/Types";
 
 function App() {
   const [file, setFile] = useState(null);
 
-  const [article, setArticle] = useState({
-    title: "",
-    entry: "",
-    breadth: "",
-    file: "",
-  });
+  const [article, setArticle] = useState({} as Article);
 
   return (
     <>

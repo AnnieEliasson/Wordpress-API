@@ -1,44 +1,31 @@
-import React, { useState } from "react";
-export type Props = {
-  breadth: string;
-  setBreadth: any;
-  entry: string;
-  setEntry: any;
-  title: string;
-  setTitle: any;
-  file: any;
-  setFile: any;
-};
+import { ChangeEvent, useState } from "react";
+import { ArticleProps } from "../../Types/Types";
+import CreatePostForm from "../../Components/CreatePostForm/CreatePostForm";
+
+const TOKEN =
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L3Rlc3RzaWRhIiwiaWF0IjoxNzI1NTI3MDIwLCJuYmYiOjE3MjU1MjcwMjAsImV4cCI6MTcyNjEzMTgyMCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.YWf6QOWuZgNBL9sy3EXwJB-7JO_X3Vwz_hsV4UMzKsQ";
+
+const BASE_URL = "http://localhost/testsida/wp-json/wp/v2";
 
 const CreatePostPage = ({
-  breadth,
-  setBreadth,
-  entry,
-  setEntry,
-  title,
-  setTitle,
   file,
   setFile,
-}: Props) => {
-  const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L3Rlc3RzaWRhIiwiaWF0IjoxNzI1NTI3MDIwLCJuYmYiOjE3MjU1MjcwMjAsImV4cCI6MTcyNjEzMTgyMCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.YWf6QOWuZgNBL9sy3EXwJB-7JO_X3Vwz_hsV4UMzKsQ";
-
+  article,
+  setArticle,
+}: ArticleProps) => {
   // Hanterar uppladdningen av bilden
-  const handleApi = async () => {
+  const UploadImage = async () => {
     try {
       const formData = new FormData();
       if (file) formData.append("file", file);
 
-      const response = await fetch(
-        "http://localhost/testsida/wp-json/wp/v2/media",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        }
-      );
+      const response = await fetch(`${BASE_URL}/media`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+        body: formData,
+      });
 
       if (!response.ok) {
         throw new Error(
@@ -47,8 +34,6 @@ const CreatePostPage = ({
       }
 
       const imageData = await response.json();
-      console.log("Bild uppladdad, ID:", imageData.id);
-      console.log("Bild URL:", imageData.source_url);
       return imageData;
     } catch (error) {
       console.error("Fel vid uppladdning av bild:", error);
@@ -56,36 +41,31 @@ const CreatePostPage = ({
   };
 
   // Postar inlägget med den uppladdade bilden
-  const postToWordpress = async () => {
+  const PostToWordpress = async () => {
     try {
       // Ladda upp bilden och få tillbaka bilddata
-      const imageData = await handleApi();
-      const imageUrl = imageData.source_url;
+      const imageData = await UploadImage();
 
       const postContent = `
       <div style="display: flex; gap: 20px;">
-      <p style="font-style: italic;">${entry}</p>
-        <img style="max-width: 320px; border: 1px solid black; border-radius: 3px;" src="${imageUrl}" alt="${title}" />
+      <p style="font-style: italic;">${article.entry}</p>
+        <img style="max-width: 320px; border: 1px solid black; border-radius: 3px;" src="${imageData.source_url}" alt="${article.title}" />
     </div>
-    <p>${breadth}</p>
+    <p>${article.breadth}</p>
       `;
 
-      const response = await fetch(
-        "http://localhost/testsida/wp-json/wp/v2/posts",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title: title,
-            content: postContent,
-            comment_status: "closed",
-            status: "publish",
-          }),
-        }
-      );
+      const response = await fetch(`${BASE_URL}/posts`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: article.title,
+          content: postContent,
+          status: "publish",
+        }),
+      });
 
       if (!response.ok) {
         throw new Error(`Något gick fel: ${response.statusText}`);
@@ -98,57 +78,31 @@ const CreatePostPage = ({
     }
   };
 
-  const [imageSrc, setImageSrc] = useState("");
-
   // Hantera filinmatning
-  const handleImageChange = (e) => {
-    setFile(e.target.files[0]);
-    setImageSrc(URL.createObjectURL(e.target.files[0]));
-    console.log("fsadfasdf", e.target.files[0]);
+  const [imageSrc, setImageSrc] = useState("");
+  const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+      setImageSrc(URL.createObjectURL(e.target.files[0]));
+    }
   };
 
   return (
     <div className="CreatePostPage">
-      <div className="form-container">
-        <textarea
-          id="rubrik"
-          placeholder="Lorem ipsum dolor sit amet consectetur."
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
+      <CreatePostForm
+        article={article}
+        setArticle={setArticle}
+        imageSrc={imageSrc}
+      />
+      <input
+        type="file"
+        id="image"
+        name="image"
+        accept="image/png, image/jpeg"
+        onChange={handleFileInput}
+      />
 
-        <div className="TextAndImage">
-          <textarea
-            placeholder="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo, laudantium atque inventore, molestias aliquam quod tempore, dolorem nesciunt optio dolores voluptatibus. Animi minima suscipit fuga officiis dignissimos perferendis cumque eligendi."
-            value={entry}
-            onChange={(e) => setEntry(e.target.value)}
-          />
-          <div
-            className="image"
-            style={{
-              backgroundImage: `url(${imageSrc})`,
-              backgroundSize: "cover",
-            }}
-          ></div>
-        </div>
-
-        <textarea
-          id="main-text"
-          placeholder="Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem quod officia possimus est eius itaque odio assumenda maxime numquam placeat quasi fugiat atque saepe, iure dolore, nisi porro officiis similique praesentium vel commodi quisquam pariatur corporis! Fugit fugiat accusamus, adipisci, provident quia asperiores quas veniam aliquid iure totam tempora assumenda ex voluptatibus possimus culpa facilis ducimus perferendis cupiditate exercitationem a nostrum! Rerum, et. Possimus obcaecati, tempora ipsa iste voluptate ducimus pariatur minima vero error omnis repellat explicabo quaerat ratione in distinctio quasi illo optio ex molestias magnam quisquam velit itaque dolorum. Dolorem unde voluptas vel eius excepturi deleniti ratione omnis aliquid, iusto, odit voluptatum voluptate suscipit animi exercitationem delectus qui. Esse, ut assumenda, quas amet at ad debitis suscipit dicta odio, fugiat et ipsam veniam necessitatibus autem delectus labore libero facilis iure! Laudantium odio ratione recusandae adipisci nam harum molestias eligendi modi necessitatibus nihil? Ratione tempora eligendi dolores, eaque mollitia exercitationem. Placeat minus voluptates et asperiores vero tempore harum commodi laborum eligendi porro dolorum ipsa cumque, ab quo laudantium minima alias, sunt dolore quas ducimus ex voluptatem. Id sed hic, non expedita quo doloremque nesciunt provident quidem sint recusandae autem, sit placeat commodi magni, similique perferendis architecto voluptas iste ut aspernatur eveniet voluptatem. Dicta similique expedita accusantium repellendus molestiae omnis corrupti mollitia laborum, ipsa a doloremque minima aliquid doloribus nam? Laborum nisi sunt, nostrum aliquam natus, voluptas, accusamus culpa aperiam omnis earum architecto? Deleniti alias vitae dolor impedit quam explicabo maxime ex unde eligendi, cumque magnam nihil dolores fuga eum aliquid modi rem ipsum perferendis, itaque quibusdam, qui officiis eius. Dolor impedit id amet possimus quae qui at recusandae velit dignissimos quibusdam maiores ex, facilis assumenda dolorem veritatis, illo, ipsum totam cum hic tempore."
-          value={breadth}
-          onChange={(e) => setBreadth(e.target.value)}
-        />
-
-        <input
-          type="file"
-          id="image"
-          name="image"
-          accept="image/png, image/jpeg"
-          onChange={handleImageChange}
-        />
-
-        <button onClick={postToWordpress}>Posta inlägg</button>
-      </div>
+      <button onClick={PostToWordpress}>Posta inlägg</button>
     </div>
   );
 };

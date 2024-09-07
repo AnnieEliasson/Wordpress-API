@@ -1,4 +1,5 @@
 @import "./Pages/CreatePostPage/CreatePostPage.scss";
+@import "./Components/CreatePostForm/_CreatePostForm.scss";
 
 * {
   margin: 0;

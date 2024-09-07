@@ -1,0 +1,89 @@
+.Form-container {
+  border: 0px solid white;
+  width: 780px;
+  height: fit-content;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 50px;
+
+  .TextAndImage {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    width: 100%;
+    margin-top: 0px;
+
+    textarea {
+      width: 50%;
+      min-height: 270px;
+      font-family: "Times New Roman", Times, serif;
+      font-style: italic;
+      font-size: 22px;
+      border: none;
+      &::placeholder {
+        transition: 0.7s;
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      &:hover::placeholder {
+        color: white;
+      }
+    }
+
+    .image {
+      width: 50%;
+      /* height: 250px; */
+      height: auto;
+      background-color: rgb(229, 229, 229);
+      border: 1px solid black;
+      border-radius: 5px;
+      /* box-shadow: 2px 2px 5px black; */
+    }
+  }
+
+  #rubrik {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 45px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: none;
+    margin-bottom: 20px;
+
+    &::placeholder {
+      transition: 0.7s;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover::placeholder {
+      color: white;
+    }
+  }
+}
+
+#main-text {
+  border: none;
+  margin-top: 10px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 22px;
+  height: 650px;
+
+  &::placeholder {
+    transition: 0.7s;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover::placeholder {
+    color: white;
+  }
+}

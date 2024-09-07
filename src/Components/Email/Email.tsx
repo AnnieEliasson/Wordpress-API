@@ -1,18 +1,12 @@
-import React, { useState } from "react";
-import { Props } from "../../Pages/CreatePostPage/CreatePostPage";
+type Props = {
+  article: {
+    breadth: string;
+    entry: string;
+    title: string;
+  };
+};
 
-const Email = ({
-  breadth,
-  setBreadth,
-  entry,
-  setEntry,
-  title,
-  setTitle,
-  file,
-  setFile,
-}: Props) => {
-  const [status, setStatus] = useState(""); // För att visa feedback till användaren
-
+const Email = ({ article }: Props) => {
   const sendMail = async () => {
     const serviceId = "service_7nigrok";
     const templateId = "template_q2ilo02";
@@ -23,9 +17,9 @@ const Email = ({
       template_id: templateId,
       user_id: publicKey,
       template_params: {
-        title: title,
-        entry: entry,
-        breadth: breadth,
+        title: article.title,
+        entry: article.entry,
+        breadth: article.breadth,
       },
     };
 
@@ -42,15 +36,11 @@ const Email = ({
       );
 
       if (response.ok) {
-        setStatus("E-post skickades framgångsrikt!");
         console.log("E-post skickades", await response.json());
-        setBreadth("");
       } else {
-        setStatus("Misslyckades att skicka e-post.");
         console.error("Fel vid skickande av e-post", await response.text());
       }
     } catch (error) {
-      setStatus("Något gick fel.");
       console.error("Något gick fel med begäran", error);
     }
   };
@@ -58,7 +48,6 @@ const Email = ({
   return (
     <div>
       <button onClick={sendMail}>Skicka</button>
-      {status && <p>{status}</p>}
     </div>
   );
 };

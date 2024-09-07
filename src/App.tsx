@@ -1,36 +1,28 @@
 import { useState } from "react";
 import "./App.css";
-import Email from "./Components/Email/email";
 import CreatePostPage from "./Pages/CreatePostPage/CreatePostPage";
+import Email from "./Components/Email/Email";
 
 function App() {
-  const [breadth, setBreadth] = useState("");
-  const [entry, setEntry] = useState("");
-  const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
+
+  const [article, setArticle] = useState({
+    title: "",
+    entry: "",
+    breadth: "",
+    file: "",
+  });
 
   return (
     <>
       <CreatePostPage
-        breadth={breadth}
-        setBreadth={setBreadth}
-        entry={entry}
-        setEntry={setEntry}
-        title={title}
-        setTitle={setTitle}
         file={file}
         setFile={setFile}
+        article={article}
+        setArticle={setArticle}
       />
-      <Email
-        breadth={breadth}
-        setBreadth={setBreadth}
-        entry={entry}
-        setEntry={setEntry}
-        title={title}
-        setTitle={setTitle}
-        file={file}
-        setFile={setFile}
-      />
+
+      <Email article={article} />
     </>
   );
 }

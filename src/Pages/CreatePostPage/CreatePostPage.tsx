@@ -2,9 +2,7 @@ import { ChangeEvent, useState } from "react";
 import { ArticleProps } from "../../Types/Types";
 import CreatePostForm from "../../Components/CreatePostForm/CreatePostForm";
 import { PostContent } from "../../BlogPostHTML/PostContent";
-
-const TOKEN =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0L3Rlc3RzaWRhIiwiaWF0IjoxNzI1NTI3MDIwLCJuYmYiOjE3MjU1MjcwMjAsImV4cCI6MTcyNjEzMTgyMCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiMSJ9fX0.YWf6QOWuZgNBL9sy3EXwJB-7JO_X3Vwz_hsV4UMzKsQ";
+import { TOKEN } from "../../Token/Token.ts";
 
 const BASE_URL = "http://localhost/testsida/wp-json/wp/v2";
 

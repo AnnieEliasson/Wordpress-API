@@ -42,7 +42,9 @@ const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
   };
 
   // Postar inlägget med den uppladdade bilden
-  const PostToWordpress = async () => {
+  const PostToWordpress = async (e: any) => {
+    const status = e.target.id;
+
     try {
       // Ladda upp bilden och få tillbaka bilddata
       const imageData = await UploadImage();
@@ -56,7 +58,7 @@ const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
         body: JSON.stringify({
           title: article.title,
           content: PostContent(article, imageData),
-          status: "publish",
+          status: status,
         }),
       });
 
@@ -65,7 +67,10 @@ const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
       }
 
       const data = await response.json();
-      console.log("Inlägg skapat:", data);
+      console.log("Inlägg publiserat:", data);
+
+      if (status === "draft") console.log("Inlägg sparat:", data);
+      if (status === "publish") console.log("Inlägg publiserat:", data);
     } catch (error) {
       console.error("Fel vid skapande av inlägg:", error);
     }
@@ -98,8 +103,15 @@ const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
         onChange={handleFileInput}
       />
 
-      <button className="publish-btn" onClick={PostToWordpress}>
+      <button
+        id="publish"
+        className="publish-btn"
+        onClick={(e) => PostToWordpress(e)}
+      >
         Publicera
+      </button>
+      <button id="draft" onClick={(e) => PostToWordpress(e)}>
+        Spara
       </button>
     </div>
   );

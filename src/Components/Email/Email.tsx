@@ -36,7 +36,8 @@ const Email = ({ article, test }: Props) => {
           entry: article.entry,
           breadth: article.breadth,
           to_email: subscriber,
-          image: `http://localhost/testsida/wp-content/uploads/2024/09/${test}`,
+          image:
+            "https://brvux.se/wp-content/uploads/2024/04/nyhetsbrev-2-1000x800.png",
         },
       };
 

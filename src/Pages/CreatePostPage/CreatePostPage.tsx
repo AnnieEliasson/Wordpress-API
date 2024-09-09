@@ -80,7 +80,6 @@ const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
   const [imageSrc, setImageSrc] = useState("");
   const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      /* setFile(e.target.files[0]); */
       setArticle({ ...article, file: e.target.files[0] });
       setImageSrc(URL.createObjectURL(e.target.files[0]));
       console.log(e.target.files[0].name);

@@ -76,6 +76,40 @@ const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
     }
   };
 
+  // Plockar ut alla span element ur HTMLsträng
+  const extractParagraphs = (htmlString: string) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, "text/html");
+    const paragraphs = doc.querySelectorAll("span");
+    const paragraphTexts = Array.from(paragraphs).map((p) => p.textContent);
+
+    return paragraphTexts;
+  };
+
+  const RetriveFromWordpress = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/posts?status=draft`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      });
+      const data = await response.json();
+      //console.log(data[0].content.rendered);
+
+      const result = extractParagraphs(data[0].content.rendered);
+      console.log(result);
+      setArticle({
+        ...article,
+        title: data[0].title.rendered,
+        entry: result[0],
+        breadth: result[1],
+      });
+    } catch (error) {
+      console.log("Fel vid hämtning av inlägg", error);
+    }
+  };
+
   // Hantera filinmatning
   const [imageSrc, setImageSrc] = useState("");
   const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -112,6 +146,7 @@ const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
       <button id="draft" onClick={(e) => PostToWordpress(e)}>
         Spara
       </button>
+      <button onClick={RetriveFromWordpress}>Hämta</button>
     </div>
   );
 };

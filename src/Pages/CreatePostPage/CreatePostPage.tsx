@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent } from "react";
 import { Article } from "../../Types/Types";
 import CreatePostForm from "../../Components/CreatePostForm/CreatePostForm";
 import { PostContent } from "../../BlogPostHTML/PostContent";
@@ -10,7 +10,6 @@ const BASE_URL = "http://localhost/testsida/wp-json/wp/v2";
 type Props = {
   article: Article;
   setArticle: any;
-  setTest: any;
   imageSrc: any;
   setImageSrc: any;
 };
@@ -18,7 +17,6 @@ type Props = {
 const CreatePostPage = ({
   article,
   setArticle,
-  setTest,
   imageSrc,
   setImageSrc,
 }: Props) => {
@@ -49,21 +47,11 @@ const CreatePostPage = ({
     }
   };
 
-  /* useEffect(() => {
-    const upload = async () => {
-      const imageData = await UploadImage();
-      console.log(imageData, "<------- denhär");
-    };
-    upload();
-  }, [article.file]); */
-
   // Postar inlägget med den uppladdade bilden
   const PostToWordpress = async (e: any, imageSrc: any) => {
     const status = e.target.id;
 
     try {
-      // Ladda upp bilden och få tillbaka bilddata
-
       const response = await fetch(`${BASE_URL}/posts`, {
         method: "POST",
         headers: {
@@ -119,12 +107,10 @@ const CreatePostPage = ({
         },
       });
       const data = await response.json();
-      //console.log(data[0].content.rendered);
 
       const texts = extractParagraphs(data[0].content.rendered);
       const img = extractImgSrc(data[0].content.rendered);
 
-      console.log(img[0], "img img img");
       setArticle({
         ...article,
         title: data[0].title.rendered,
@@ -143,15 +129,13 @@ const CreatePostPage = ({
     if (e.target.files) {
       setArticle({ ...article, file: e.target.files[0] });
       /* setImageSrc(URL.createObjectURL(e.target.files[0])); */
-      console.log(e.target.files[0].name);
-      setTest(e.target.files[0].name);
     }
   };
 
   const handleUpload = async () => {
     const imageData = await UploadImage();
     setImageSrc(imageData.guid.rendered);
-    console.log(imageData.guid.rendered, "TEST IMAGEDATA");
+    console.log("image uploaded", imageData);
   };
 
   return (

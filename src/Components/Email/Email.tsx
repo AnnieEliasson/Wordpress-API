@@ -2,22 +2,19 @@ import { Article } from "../../Types/Types";
 
 type Props = {
   article: Article;
-  test: string;
+  imageSrc: any;
 };
 
 const subscribers = ["annie.eliasson@gmail.com"];
 
-const Email = ({ article, test }: Props) => {
-  const sendMail = (
-    article: {
-      article?: Article;
-      title?: any;
-      entry?: any;
-      breadth?: any;
-      file?: any;
-    },
-    test: string
-  ) => {
+const Email = ({ article, imageSrc }: Props) => {
+  const sendMail = (article: {
+    article?: Article;
+    title?: any;
+    entry?: any;
+    breadth?: any;
+    file?: any;
+  }) => {
     console.log(article.file);
 
     const serviceId = "service_7nigrok";
@@ -25,7 +22,7 @@ const Email = ({ article, test }: Props) => {
     const publicKey = "u_YqnrrTApsmG-_FN";
 
     subscribers.forEach((subscriber) => {
-      console.log("test", test);
+      console.log(imageSrc, "<----");
 
       const data = {
         service_id: serviceId,
@@ -70,7 +67,7 @@ const Email = ({ article, test }: Props) => {
 
   return (
     <div>
-      <button onClick={() => sendMail(article, test)}>Skicka</button>
+      <button onClick={() => sendMail(article)}>Skicka</button>
     </div>
   );
 };

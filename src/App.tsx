@@ -6,7 +6,6 @@ import { Article } from "./Types/Types";
 
 function App() {
   const [article, setArticle] = useState({} as Article);
-  const [test, setTest] = useState("");
   const [imageSrc, setImageSrc] = useState("");
 
   return (
@@ -14,12 +13,11 @@ function App() {
       <CreatePostPage
         article={article}
         setArticle={setArticle}
-        setTest={setTest}
         imageSrc={imageSrc}
         setImageSrc={setImageSrc}
       />
 
-      <Email article={article} test={test} />
+      <Email article={article} imageSrc={imageSrc} />
     </>
   );
 }

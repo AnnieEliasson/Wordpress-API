@@ -17,25 +17,13 @@ const CreatePostPage = ({
   imageSrc,
   setImageSrc,
 }: Props) => {
-  const handleFileChange = async (e: { target: { files: any } }) => {
-    const imageData = await UploadImage(e.target.files[0]);
-    console.log("Funkar?", imageData);
-    setImageSrc(imageData.guid.rendered);
-  };
-
   return (
     <div className="CreatePostPage">
       <CreatePostForm
         article={article}
         setArticle={setArticle}
         imageSrc={imageSrc}
-      />
-      <input
-        type="file"
-        id="image"
-        name="image"
-        accept="image/png, image/jpeg"
-        onChange={(e) => handleFileChange(e)}
+        setImageSrc={setImageSrc}
       />
 
       <button

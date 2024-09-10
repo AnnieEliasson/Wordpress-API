@@ -1,3 +1,4 @@
+import { UploadImage } from "../../API/UploadImage";
 import {
   placeholder_Title,
   placeholder_Entry,
@@ -9,9 +10,21 @@ type Props = {
   article: Article;
   setArticle: any;
   imageSrc: string;
+  setImageSrc: any;
 };
 
-const CreatePostForm = ({ article, setArticle, imageSrc }: Props) => {
+const CreatePostForm = ({
+  article,
+  setArticle,
+  imageSrc,
+  setImageSrc,
+}: Props) => {
+  const handleFileChange = async (e: { target: { files: any } }) => {
+    const imageData = await UploadImage(e.target.files[0]);
+    console.log("Funkar?", imageData);
+    setImageSrc(imageData.guid.rendered);
+  };
+
   return (
     <div className="Form-container">
       <textarea
@@ -33,11 +46,22 @@ const CreatePostForm = ({ article, setArticle, imageSrc }: Props) => {
             backgroundImage: `url(${
               imageSrc ? imageSrc : "./transparent_kraken.png"
             })`,
-            backgroundSize: "contain",
+            backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
           }}
-        ></div>
+        >
+          <label htmlFor="image" className="choose-file-lable">
+            +
+            <input
+              type="file"
+              id="image"
+              name="image"
+              accept="image/png, image/jpeg"
+              onChange={(e) => handleFileChange(e)}
+            />
+          </label>
+        </div>
       </div>
 
       <textarea

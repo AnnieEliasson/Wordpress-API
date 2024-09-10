@@ -10,9 +10,9 @@ const subscribers = ["annie.eliasson@gmail.com"];
 const Email = ({ article, imageSrc }: Props) => {
   const sendMail = (article: {
     article?: Article;
-    title?: any;
-    entry?: any;
-    breadth?: any;
+    title?: string;
+    entry?: string;
+    breadth?: string;
     file?: any;
   }) => {
     console.log(article.file);
@@ -33,8 +33,8 @@ const Email = ({ article, imageSrc }: Props) => {
           entry: article.entry,
           breadth: article.breadth,
           to_email: subscriber,
-          image:
-            "https://brvux.se/wp-content/uploads/2024/04/nyhetsbrev-2-1000x800.png",
+          image: imageSrc,
+          /* "https://brvux.se/wp-content/uploads/2024/04/nyhetsbrev-2-1000x800.png" */
         },
       };
 

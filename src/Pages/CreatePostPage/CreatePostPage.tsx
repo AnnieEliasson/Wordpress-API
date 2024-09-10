@@ -1,4 +1,3 @@
-import { ChangeEvent } from "react";
 import { Article } from "../../Types/Types";
 import CreatePostForm from "../../Components/CreatePostForm/CreatePostForm";
 import { UploadImage } from "../../API/UploadImage";
@@ -18,19 +17,10 @@ const CreatePostPage = ({
   imageSrc,
   setImageSrc,
 }: Props) => {
-  // Hantera filinmatning
-
-  const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setArticle({ ...article, file: e.target.files[0] });
-      /* setImageSrc(URL.createObjectURL(e.target.files[0])); */
-    }
-  };
-
-  const handleUpload = async () => {
-    const imageData = await UploadImage(article);
+  const handleFileChange = async (e: { target: { files: any } }) => {
+    const imageData = await UploadImage(e.target.files[0]);
+    console.log("Funkar?", imageData);
     setImageSrc(imageData.guid.rendered);
-    console.log("image uploaded", imageData);
   };
 
   return (
@@ -45,7 +35,7 @@ const CreatePostPage = ({
         id="image"
         name="image"
         accept="image/png, image/jpeg"
-        onChange={handleFileInput}
+        onChange={(e) => handleFileChange(e)}
       />
 
       <button
@@ -63,7 +53,6 @@ const CreatePostPage = ({
       >
         Hämta
       </button>
-      <button onClick={handleUpload}>Ladda upp bild</button>
     </div>
   );
 };

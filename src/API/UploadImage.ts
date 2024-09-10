@@ -1,11 +1,10 @@
-import { Article } from "../Types/Types";
 import { BASE_URL, TOKEN } from "./Variabler";
 
 // Hanterar uppladdningen av bilden
-export const UploadImage = async (article: Article) => {
+export const UploadImage = async (file: any) => {
   try {
     const formData = new FormData();
-    if (article.file) formData.append("file", article.file);
+    if (file) formData.append("file", file);
 
     const response = await fetch(`${BASE_URL}/media`, {
       method: "POST",

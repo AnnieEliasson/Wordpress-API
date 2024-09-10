@@ -29,10 +29,7 @@ export const PostToWordpress = async (
     }
 
     const data = await response.json();
-    console.log("Inlägg publiserat:", data);
-
-    if (status === "draft") console.log("Inlägg sparat:", data);
-    if (status === "publish") console.log("Inlägg publiserat:", data);
+    console.log(`Postat som ${status}:`, data);
   } catch (error) {
     console.error("Fel vid skapande av inlägg:", error);
   }

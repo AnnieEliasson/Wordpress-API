@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Article } from "../../Types/Types";
 import CreatePostForm from "../../Components/CreatePostForm/CreatePostForm";
 import { PostContent } from "../../BlogPostHTML/PostContent";
@@ -11,9 +11,17 @@ type Props = {
   article: Article;
   setArticle: any;
   setTest: any;
+  imageSrc: any;
+  setImageSrc: any;
 };
 
-const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
+const CreatePostPage = ({
+  article,
+  setArticle,
+  setTest,
+  imageSrc,
+  setImageSrc,
+}: Props) => {
   // Hanterar uppladdningen av bilden
   const UploadImage = async () => {
     try {
@@ -41,13 +49,20 @@ const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
     }
   };
 
+  /* useEffect(() => {
+    const upload = async () => {
+      const imageData = await UploadImage();
+      console.log(imageData, "<------- denhär");
+    };
+    upload();
+  }, [article.file]); */
+
   // Postar inlägget med den uppladdade bilden
-  const PostToWordpress = async (e: any) => {
+  const PostToWordpress = async (e: any, imageSrc: any) => {
     const status = e.target.id;
 
     try {
       // Ladda upp bilden och få tillbaka bilddata
-      const imageData = await UploadImage();
 
       const response = await fetch(`${BASE_URL}/posts`, {
         method: "POST",
@@ -57,8 +72,7 @@ const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
         },
         body: JSON.stringify({
           title: article.title,
-          content: PostContent(article, imageData),
-          ingress: "TESTTESTTEST",
+          content: PostContent(article, imageSrc),
           status: status,
         }),
       });
@@ -87,6 +101,15 @@ const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
     return paragraphTexts;
   };
 
+  const extractImgSrc = (htmlString: string) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, "text/html");
+    const images = doc.querySelectorAll("img");
+    const imgSrcTexts = Array.from(images).map((img) => img.src);
+
+    return imgSrcTexts;
+  };
+
   const RetriveFromWordpress = async () => {
     try {
       const response = await fetch(`${BASE_URL}/posts?status=draft`, {
@@ -98,28 +121,37 @@ const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
       const data = await response.json();
       //console.log(data[0].content.rendered);
 
-      const result = extractParagraphs(data[0].content.rendered);
-      console.log(result);
+      const texts = extractParagraphs(data[0].content.rendered);
+      const img = extractImgSrc(data[0].content.rendered);
+
+      console.log(img[0], "img img img");
       setArticle({
         ...article,
         title: data[0].title.rendered,
-        entry: result[0],
-        breadth: result[1],
+        entry: texts[0],
+        breadth: texts[1],
       });
+      setImageSrc(img[0]);
     } catch (error) {
       console.log("Fel vid hämtning av inlägg", error);
     }
   };
 
   // Hantera filinmatning
-  const [imageSrc, setImageSrc] = useState("");
+
   const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setArticle({ ...article, file: e.target.files[0] });
-      setImageSrc(URL.createObjectURL(e.target.files[0]));
+      /* setImageSrc(URL.createObjectURL(e.target.files[0])); */
       console.log(e.target.files[0].name);
       setTest(e.target.files[0].name);
     }
+  };
+
+  const handleUpload = async () => {
+    const imageData = await UploadImage();
+    setImageSrc(imageData.guid.rendered);
+    console.log(imageData.guid.rendered, "TEST IMAGEDATA");
   };
 
   return (
@@ -140,14 +172,15 @@ const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
       <button
         id="publish"
         className="publish-btn"
-        onClick={(e) => PostToWordpress(e)}
+        onClick={(e) => PostToWordpress(e, imageSrc)}
       >
         Publicera
       </button>
-      <button id="draft" onClick={(e) => PostToWordpress(e)}>
+      <button id="draft" onClick={(e) => PostToWordpress(e, imageSrc)}>
         Spara
       </button>
       <button onClick={RetriveFromWordpress}>Hämta</button>
+      <button onClick={handleUpload}>Ladda upp bild</button>
     </div>
   );
 };

@@ -8,7 +8,7 @@ import { RetriveFromWordpress } from "../../API/RetriveFromWordpress";
 type Props = {
   article: Article;
   setArticle: any;
-  imageSrc: any;
+  imageSrc: string;
   setImageSrc: any;
 };
 

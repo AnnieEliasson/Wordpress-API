@@ -2,7 +2,7 @@ import { Article } from "../../Types/Types";
 
 type Props = {
   article: Article;
-  imageSrc: any;
+  imageSrc: string;
 };
 
 const subscribers = ["annie.eliasson@gmail.com"];

@@ -5,7 +5,7 @@ import { BASE_URL, TOKEN } from "./Variabler";
 // Postar inlägget med den uppladdade bilden
 export const PostToWordpress = async (
   e: any,
-  imageSrc: any,
+  imageSrc: string,
   article: Article
 ) => {
   const status = e.target.id;

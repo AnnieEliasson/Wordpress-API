@@ -3,11 +3,12 @@ import {
   placeholder_Entry,
   placeholder_Breadth,
 } from "../../Pages/CreatePostPage/Placeholders";
+import { Article } from "../../Types/Types";
 
 type Props = {
-  article: any;
+  article: Article;
   setArticle: any;
-  imageSrc: any;
+  imageSrc: string;
 };
 
 const CreatePostForm = ({ article, setArticle, imageSrc }: Props) => {

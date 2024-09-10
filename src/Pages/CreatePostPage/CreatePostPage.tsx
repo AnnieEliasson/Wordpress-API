@@ -58,6 +58,7 @@ const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
         body: JSON.stringify({
           title: article.title,
           content: PostContent(article, imageData),
+          ingress: "TESTTESTTEST",
           status: status,
         }),
       });
@@ -80,7 +81,7 @@ const CreatePostPage = ({ article, setArticle, setTest }: Props) => {
   const extractParagraphs = (htmlString: string) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, "text/html");
-    const paragraphs = doc.querySelectorAll("span");
+    const paragraphs = doc.querySelectorAll("#text");
     const paragraphTexts = Array.from(paragraphs).map((p) => p.textContent);
 
     return paragraphTexts;

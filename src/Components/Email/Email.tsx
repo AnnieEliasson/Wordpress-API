@@ -1,20 +1,15 @@
 import { Article } from "../../Types/Types";
+import { useArticleContext } from "../Context/ArticleContextProvider";
 
 type Props = {
-  article: Article;
   imageSrc: string;
 };
 
 const subscribers = ["annie.eliasson@gmail.com"];
 
-const Email = ({ article, imageSrc }: Props) => {
-  const sendMail = (article: {
-    article?: Article;
-    title?: string;
-    entry?: string;
-    breadth?: string;
-    file?: any;
-  }) => {
+const Email = ({ imageSrc }: Props) => {
+  const { article } = useArticleContext();
+  const sendMail = (article: Article) => {
     console.log(article.file);
 
     const serviceId = "service_7nigrok";

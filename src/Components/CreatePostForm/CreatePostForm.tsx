@@ -3,16 +3,15 @@ import {
   placeholder_Entry,
   placeholder_Breadth,
 } from "../../Pages/CreatePostPage/Placeholders";
-import { Article } from "../../Types/Types";
+import { useArticleContext } from "../Context/ArticleContextProvider";
 
 type Props = {
-  article: Article;
-  setArticle: any;
   imageSrc: string;
   setImageSrc: any;
 };
 
-const CreatePostForm = ({ article, setArticle, imageSrc }: Props) => {
+const CreatePostForm = ({ imageSrc }: Props) => {
+  const { article, setArticle } = useArticleContext();
   return (
     <div className="Form-container">
       <textarea

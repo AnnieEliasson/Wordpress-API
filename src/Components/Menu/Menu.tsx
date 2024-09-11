@@ -1,17 +1,16 @@
 import { useState } from "react";
 import { PostToWordpress } from "../../API/PostToWordpress";
 import { RetriveFromWordpress } from "../../API/RetriveFromWordpress";
-import { Article } from "../../Types/Types";
 import { UploadImage } from "../../API/UploadImage";
+import { useArticleContext } from "../Context/ArticleContextProvider";
 
 type MenuProps = {
-  article: Article;
-  setArticle: any;
   imageSrc: string;
   setImageSrc: any;
 };
 
-const Menu = ({ imageSrc, article, setArticle, setImageSrc }: MenuProps) => {
+const Menu = ({ imageSrc, setImageSrc }: MenuProps) => {
+  const { article, setArticle } = useArticleContext();
   const [errorMessage, setErrorMessage] = useState("");
   const handleFileChange = async (e: { target: { files: any } }) => {
     const file = e.target.files[0];

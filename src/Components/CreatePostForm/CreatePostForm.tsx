@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { UploadImage } from "../../API/UploadImage";
 import {
   placeholder_Title,
   placeholder_Entry,
@@ -14,12 +12,7 @@ type Props = {
   setImageSrc: any;
 };
 
-const CreatePostForm = ({
-  article,
-  setArticle,
-  imageSrc,
-  setImageSrc,
-}: Props) => {
+const CreatePostForm = ({ article, setArticle, imageSrc }: Props) => {
   return (
     <div className="Form-container">
       <textarea

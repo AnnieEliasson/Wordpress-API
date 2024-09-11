@@ -25,6 +25,7 @@
     background-color: rgba(121, 158, 172, 0.678);
     /* background: linear-gradient(to bottom, #b6514b, rgb(52, 52, 52)); */
     color: white;
+    font-family: sans-serif;
     font-weight: bold;
     font-size: 1.3em;
     border: none;
@@ -42,5 +43,16 @@
     &:active {
       box-shadow: 2px 2px 5px white, inset 1px 1px 2px black;
     }
+  }
+
+  #image {
+    display: none;
+  }
+
+  .image-error {
+    width: 200px;
+    color: rgb(241, 93, 19);
+    text-shadow: 1px 1px 2px black;
+    font-size: 1.3em;
   }
 }

@@ -1,13 +1,9 @@
 import { Article } from "../../Types/Types";
 import { useArticleContext } from "../Context/ArticleContextProvider";
 
-type Props = {
-  imageSrc: string;
-};
-
 const subscribers = ["annie.eliasson@gmail.com"];
 
-const Email = ({ imageSrc }: Props) => {
+const Email = () => {
   const { article } = useArticleContext();
   const sendMail = (article: Article) => {
     console.log(article.file);
@@ -17,7 +13,7 @@ const Email = ({ imageSrc }: Props) => {
     const publicKey = "u_YqnrrTApsmG-_FN";
 
     subscribers.forEach((subscriber) => {
-      console.log(imageSrc, "<----");
+      console.log(article.imageURL, "<----");
 
       const data = {
         service_id: serviceId,
@@ -28,7 +24,7 @@ const Email = ({ imageSrc }: Props) => {
           entry: article.entry,
           breadth: article.breadth,
           to_email: subscriber,
-          image: imageSrc,
+          image: article.imageURL,
           /* "https://brvux.se/wp-content/uploads/2024/04/nyhetsbrev-2-1000x800.png" */
         },
       };

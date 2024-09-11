@@ -14,6 +14,7 @@ const initialArticle: Article = {
   title: "",
   entry: "",
   breadth: "",
+  imageURL: "",
   file: null,
 };
 

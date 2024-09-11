@@ -1,16 +1,13 @@
-import { useState } from "react";
 import "./App.css";
 import CreatePostPage from "./Pages/CreatePostPage/CreatePostPage";
 import Email from "./Components/Email/Email";
 
 function App() {
-  const [imageSrc, setImageSrc] = useState("");
-
   return (
     <>
-      <CreatePostPage imageSrc={imageSrc} setImageSrc={setImageSrc} />
+      <CreatePostPage />
 
-      <Email imageSrc={imageSrc} />
+      <Email />
     </>
   );
 }

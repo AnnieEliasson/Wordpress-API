@@ -2,18 +2,13 @@ import CreatePostForm from "../../Components/CreatePostForm/CreatePostForm";
 import Modal from "../../Components/Modal/Modal";
 import Menu from "../../Components/Menu/Menu";
 
-type Props = {
-  imageSrc: string;
-  setImageSrc: any;
-};
-
-const CreatePostPage = ({ imageSrc, setImageSrc }: Props) => {
+const CreatePostPage = () => {
   return (
     <div className="CreatePostPage">
       <Modal />
-      <CreatePostForm imageSrc={imageSrc} setImageSrc={setImageSrc} />
+      <CreatePostForm />
 
-      <Menu imageSrc={imageSrc} setImageSrc={setImageSrc} />
+      <Menu />
     </div>
   );
 };

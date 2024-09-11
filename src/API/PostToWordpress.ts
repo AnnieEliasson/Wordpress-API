@@ -3,11 +3,7 @@ import { Article } from "../Types/Types";
 import { BASE_URL, TOKEN } from "./Variabler";
 
 // Postar inlägget med den uppladdade bilden
-export const PostToWordpress = async (
-  e: any,
-  imageSrc: string,
-  article: Article
-) => {
+export const PostToWordpress = async (e: any, article: Article) => {
   const status = e.target.id;
 
   try {
@@ -19,7 +15,7 @@ export const PostToWordpress = async (
       },
       body: JSON.stringify({
         title: article.title,
-        content: PostContent(article, imageSrc),
+        content: PostContent(article),
         status: status,
       }),
     });

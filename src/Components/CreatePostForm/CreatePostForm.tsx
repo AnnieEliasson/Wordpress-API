@@ -5,12 +5,7 @@ import {
 } from "../../Pages/CreatePostPage/Placeholders";
 import { useArticleContext } from "../Context/ArticleContextProvider";
 
-type Props = {
-  imageSrc: string;
-  setImageSrc: any;
-};
-
-const CreatePostForm = ({ imageSrc }: Props) => {
+const CreatePostForm = () => {
   const { article, setArticle } = useArticleContext();
   return (
     <div className="Form-container">
@@ -31,7 +26,7 @@ const CreatePostForm = ({ imageSrc }: Props) => {
           className="image"
           style={{
             backgroundImage: `url(${
-              imageSrc ? imageSrc : "./transparent_kraken.png"
+              article.imageURL ? article.imageURL : "./transparent_kraken.png"
             })`,
             backgroundSize: "cover",
             backgroundPosition: "center",

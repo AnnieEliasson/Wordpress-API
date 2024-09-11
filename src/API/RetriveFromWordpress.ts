@@ -7,8 +7,7 @@ import { BASE_URL, TOKEN } from "./Variabler";
 
 export const RetriveFromWordpress = async (
   article: Article,
-  setArticle: any,
-  setImageSrc: any
+  setArticle: any
 ) => {
   try {
     const response = await fetch(`${BASE_URL}/posts?status=draft`, {
@@ -27,8 +26,8 @@ export const RetriveFromWordpress = async (
       title: data[0].title.rendered,
       entry: texts[0],
       breadth: texts[1],
+      imageURL: img[0],
     });
-    setImageSrc(img[0]);
   } catch (error) {
     console.log("Fel vid hämtning av inlägg", error);
   }

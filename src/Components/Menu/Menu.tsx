@@ -4,12 +4,7 @@ import { RetriveFromWordpress } from "../../API/RetriveFromWordpress";
 import { UploadImage } from "../../API/UploadImage";
 import { useArticleContext } from "../Context/ArticleContextProvider";
 
-type MenuProps = {
-  imageSrc: string;
-  setImageSrc: any;
-};
-
-const Menu = ({ imageSrc, setImageSrc }: MenuProps) => {
+const Menu = () => {
   const { article, setArticle } = useArticleContext();
   const [errorMessage, setErrorMessage] = useState("");
   const handleFileChange = async (e: { target: { files: any } }) => {
@@ -36,7 +31,7 @@ const Menu = ({ imageSrc, setImageSrc }: MenuProps) => {
           imageError.classList.remove("show");
           setErrorMessage("");
           const imageData = await UploadImage(file);
-          setImageSrc(imageData.guid.rendered);
+          setArticle({ ...article, imageURL: imageData.guid.rendered });
         }
         URL.revokeObjectURL(objectUrl);
       };
@@ -50,14 +45,14 @@ const Menu = ({ imageSrc, setImageSrc }: MenuProps) => {
       <div className="button-container">
         <button
           className="menu-btn"
-          onClick={() => RetriveFromWordpress(article, setArticle, setImageSrc)}
+          onClick={() => RetriveFromWordpress(article, setArticle)}
         >
           Hämta
         </button>
         <button
           id="draft"
           className="menu-btn"
-          onClick={(e) => PostToWordpress(e, imageSrc, article)}
+          onClick={(e) => PostToWordpress(e, article)}
         >
           Spara
         </button>
@@ -78,7 +73,7 @@ const Menu = ({ imageSrc, setImageSrc }: MenuProps) => {
         <button
           id="publish"
           className="menu-btn"
-          onClick={(e) => PostToWordpress(e, imageSrc, article)}
+          onClick={(e) => PostToWordpress(e, article)}
         >
           Publicera
         </button>

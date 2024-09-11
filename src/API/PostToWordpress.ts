@@ -30,6 +30,19 @@ export const PostToWordpress = async (
 
     const data = await response.json();
     console.log(`Postat som ${status}:`, data);
+    const modal = document.querySelector(".Modal") as HTMLElement;
+    const modalText = document.querySelector(".modaltext") as HTMLElement;
+
+    if (status === "publish") {
+      modalText.innerText = `Publiserat på Wordpress`;
+    } else if (status === "draft") {
+      modalText.innerText = "Nyhetsbrevet är sparat";
+    }
+
+    modal.classList.add("show");
+    setTimeout(() => {
+      modal.classList.remove("show");
+    }, 2000);
   } catch (error) {
     console.error("Fel vid skapande av inlägg:", error);
   }

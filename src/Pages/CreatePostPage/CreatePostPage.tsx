@@ -3,6 +3,8 @@ import CreatePostForm from "../../Components/CreatePostForm/CreatePostForm";
 import { UploadImage } from "../../API/UploadImage";
 import { PostToWordpress } from "../../API/PostToWordpress";
 import { RetriveFromWordpress } from "../../API/RetriveFromWordpress";
+import Modal from "../../Components/Modal/Modal";
+import Menu from "../../Components/Menu/Menu";
 
 type Props = {
   article: Article;
@@ -19,6 +21,7 @@ const CreatePostPage = ({
 }: Props) => {
   return (
     <div className="CreatePostPage">
+      <Modal />
       <CreatePostForm
         article={article}
         setArticle={setArticle}
@@ -26,21 +29,12 @@ const CreatePostPage = ({
         setImageSrc={setImageSrc}
       />
 
-      <button
-        id="publish"
-        className="publish-btn"
-        onClick={(e) => PostToWordpress(e, imageSrc, article)}
-      >
-        Publicera
-      </button>
-      <button id="draft" onClick={(e) => PostToWordpress(e, imageSrc, article)}>
-        Spara
-      </button>
-      <button
-        onClick={() => RetriveFromWordpress(article, setArticle, setImageSrc)}
-      >
-        Hämta
-      </button>
+      <Menu
+        article={article}
+        setArticle={setArticle}
+        imageSrc={imageSrc}
+        setImageSrc={setImageSrc}
+      />
     </div>
   );
 };

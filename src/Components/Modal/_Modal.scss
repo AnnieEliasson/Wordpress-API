@@ -1,0 +1,23 @@
+.Modal {
+  padding: 50px;
+  border: 1px solid white;
+  border-radius: 20px;
+  background-color: rgba(24, 24, 24, 0.839);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  box-shadow: 5px 5px 10px black;
+  display: none;
+
+  .modaltext {
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    font-size: 3em;
+  }
+}
+
+.show {
+  display: block;
+}

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { UploadImage } from "../../API/UploadImage";
 import {
   placeholder_Title,
@@ -19,10 +20,38 @@ const CreatePostForm = ({
   imageSrc,
   setImageSrc,
 }: Props) => {
+  const [errorMessage, setErrorMessage] = useState("");
   const handleFileChange = async (e: { target: { files: any } }) => {
-    const imageData = await UploadImage(e.target.files[0]);
-    console.log("Funkar?", imageData);
-    setImageSrc(imageData.guid.rendered);
+    const file = e.target.files[0];
+
+    if (file) {
+      const img = new Image();
+      const objectUrl = URL.createObjectURL(file);
+
+      img.onload = async () => {
+        if (img.width > 1024 || img.height > 1024) {
+          setErrorMessage(
+            "Bilden du har valt är för stor. Max storlek 1024x1024"
+          );
+
+          const imageError = document.querySelector(
+            ".image-error"
+          ) as HTMLElement;
+          imageError.classList.add("show");
+        } else {
+          const imageError = document.querySelector(
+            ".image-error"
+          ) as HTMLElement;
+          imageError.classList.remove("show");
+          setErrorMessage("");
+          const imageData = await UploadImage(file);
+          setImageSrc(imageData.guid.rendered);
+        }
+        URL.revokeObjectURL(objectUrl);
+      };
+
+      img.src = objectUrl;
+    }
   };
 
   return (
@@ -51,8 +80,9 @@ const CreatePostForm = ({
             backgroundRepeat: "no-repeat",
           }}
         >
+          <p className="image-error">{errorMessage}</p>
           <label htmlFor="image" className="choose-file-lable">
-            +
+            Välj bild
             <input
               type="file"
               id="image"

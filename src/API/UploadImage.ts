@@ -2,6 +2,8 @@ import { BASE_URL, TOKEN } from "./Variabler";
 
 // Hanterar uppladdningen av bilden
 export const UploadImage = async (file: any) => {
+  const image = document.querySelector(".image") as HTMLElement;
+  image.style.backgroundImage = `url(./loader-2.gif)`;
   try {
     const formData = new FormData();
     if (file) formData.append("file", file);

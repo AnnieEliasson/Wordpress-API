@@ -1,8 +1,5 @@
 import { Article } from "../../Types/Types";
 import CreatePostForm from "../../Components/CreatePostForm/CreatePostForm";
-import { UploadImage } from "../../API/UploadImage";
-import { PostToWordpress } from "../../API/PostToWordpress";
-import { RetriveFromWordpress } from "../../API/RetriveFromWordpress";
 import Modal from "../../Components/Modal/Modal";
 import Menu from "../../Components/Menu/Menu";
 

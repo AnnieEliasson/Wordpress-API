@@ -7,7 +7,6 @@ const CreatePostPage = () => {
     <div className="CreatePostPage">
       <Modal />
       <CreatePostForm />
-
       <Menu />
     </div>
   );

@@ -3,6 +3,7 @@ import { PostToWordpress } from "../../API/PostToWordpress";
 import { RetriveFromWordpress } from "../../API/RetriveFromWordpress";
 import { UploadImage } from "../../API/UploadImage";
 import { useArticleContext } from "../Context/ArticleContextProvider";
+import { SendEmails } from "../../API/SendEmails";
 
 const Menu = () => {
   const { article, setArticle } = useArticleContext();
@@ -78,7 +79,9 @@ const Menu = () => {
         >
           Publicera
         </button>
-        <button className="menu-btn">Epost utskick</button>
+        <button className="menu-btn" onClick={() => SendEmails(article)}>
+          Epost utskick
+        </button>
       </div>
     </div>
   );

@@ -44,18 +44,19 @@ const Menu = () => {
     <div className="Menu">
       <div className="button-container">
         <button
-          className="menu-btn"
-          onClick={() => RetriveFromWordpress(article, setArticle)}
-        >
-          Hämta
-        </button>
-        <button
           id="draft"
           className="menu-btn"
           onClick={(e) => PostToWordpress(e, article)}
         >
           Spara
         </button>
+        <button
+          className="menu-btn"
+          onClick={() => RetriveFromWordpress(article, setArticle)}
+        >
+          Hämta
+        </button>
+
         <label htmlFor="image" className="menu-btn">
           Välj bild
           <input

@@ -21,6 +21,8 @@ export const RetriveFromWordpress = async (
     const texts = extractParagraphs(data[0].content.rendered);
     const img = extractImgSrc(data[0].content.rendered);
 
+    console.log(texts);
+
     setArticle({
       ...article,
       title: data[0].title.rendered,

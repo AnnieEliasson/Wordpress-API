@@ -3,7 +3,11 @@ import { Article } from "../Types/Types";
 import { BASE_URL, TOKEN } from "./Variabler";
 
 // Postar inlägget med den uppladdade bilden
-export const PostToWordpress = async (e: any, article: Article) => {
+export const PostToWordpress = async (
+  e: any,
+  article: Article,
+  setErrorMessage: any
+) => {
   const status = e.target.id;
 
   try {
@@ -31,8 +35,10 @@ export const PostToWordpress = async (e: any, article: Article) => {
 
     if (status === "publish") {
       modalText.innerText = `Publiserat på Wordpress`;
+      setErrorMessage("Ditt inlägg är publiserat på Wordpress!");
     } else if (status === "draft") {
       modalText.innerText = "Nyhetsbrevet är sparat";
+      setErrorMessage("Ditt inlägg sparat!");
     }
 
     modal.classList.add("show");

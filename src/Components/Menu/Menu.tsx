@@ -47,7 +47,7 @@ const Menu = () => {
         <button
           id="draft"
           className="menu-btn"
-          onClick={(e) => PostToWordpress(e, article)}
+          onClick={(e) => PostToWordpress(e, article, setErrorMessage)}
         >
           Spara
         </button>
@@ -75,11 +75,14 @@ const Menu = () => {
         <button
           id="publish"
           className="menu-btn"
-          onClick={(e) => PostToWordpress(e, article)}
+          onClick={(e) => PostToWordpress(e, article, setErrorMessage)}
         >
           Publicera
         </button>
-        <button className="menu-btn" onClick={() => SendEmails(article)}>
+        <button
+          className="menu-btn"
+          onClick={() => SendEmails(article, setErrorMessage)}
+        >
           Epost utskick
         </button>
       </div>

@@ -2,7 +2,7 @@
 export const extractParagraphs = (htmlString: string) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlString, "text/html");
-  const paragraphs = doc.querySelectorAll("#text");
+  const paragraphs = doc.querySelectorAll(".text");
   const paragraphTexts = Array.from(paragraphs).map((p) => p.textContent);
 
   return paragraphTexts;

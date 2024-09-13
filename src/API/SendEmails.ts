@@ -1,7 +1,7 @@
 import { PostContent } from "../BlogPostHTML/PostContent";
 import { Article } from "../Types/Types";
 
-export const SendEmails = async (article: Article) => {
+export const SendEmails = async (article: Article, setErrorMessage: any) => {
   try {
     const response = await fetch("http://localhost:5000/send-campaign", {
       method: "POST",
@@ -19,7 +19,9 @@ export const SendEmails = async (article: Article) => {
     }
 
     console.log("Campaign sent successfully!");
+    setErrorMessage("Epost skickat!");
   } catch (error) {
     console.log("Failed to send campaign.");
+    setErrorMessage("Misslyckades med att skicka Epost");
   }
 };

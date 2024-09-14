@@ -10,7 +10,7 @@ export const SendEmails = async (article: Article, setErrorMessage: any) => {
       },
       body: JSON.stringify({
         subject: article.title,
-        content: PostContent(article),
+        content: PostContent(article, "mail"),
       }),
     });
 

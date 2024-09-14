@@ -19,7 +19,7 @@ export const PostToWordpress = async (
       },
       body: JSON.stringify({
         title: article.title,
-        content: PostContent(article),
+        content: PostContent(article, "post"),
         status: status,
       }),
     });

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+/* import { useEffect } from "react";
 
 const Test = () => {
   /* const TestFetch = async () => {
@@ -18,7 +18,7 @@ const Test = () => {
 
   TestFetch(); */
 
-  useEffect(() => {
+/*   useEffect(() => {
     const TestFetch = async () => {
       const response = await fetch("http://localhost:5000/campaigns", {
         method: "GET",
@@ -39,4 +39,4 @@ const Test = () => {
   return <div>Test</div>;
 };
 
-export default Test;
+export default Test; */
